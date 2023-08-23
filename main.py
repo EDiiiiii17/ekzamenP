@@ -81,6 +81,9 @@ if __name__ == '__main__':
 
     combo_frame.pack(side=RIGHT, anchor="e", padx=20)
 
+
+
+
     # Словари для хранения цен на параметры
     material_prices = {
         "Пластик": 1000,
@@ -112,6 +115,17 @@ if __name__ == '__main__':
 
     selected_icon = StringVar()
 
+
+    def reset_values():
+        combo1.set("Профиль")
+        combo2.set("Цвет")
+        combo3.set("Фурнитура")
+        combo4.set("Стеклопакет")
+        width_entry.delete(0, "end")
+        height_entry.delete(0, "end")
+        current_label.config(image="")
+        selected_icon.set("")
+        price_label.config(text="Стоимость окна: ???")
 
     def change_image(event, new_image):
         current_label.config(image=new_image)
@@ -151,8 +165,13 @@ if __name__ == '__main__':
 
     calculate_button = Button(window, text="Рассчитать стоимость", command=calculate_price)
     calculate_button.pack(pady=250)
+    reset_button = Button(window, text="Сбросить",command=reset_values)
+    reset_button.pack(pady=0)
 
     price_label = Label(window, text="Стоимость окна: ???", font=("Helvetica", 16, "bold"), bg="#c0e0e0")
     price_label.pack(pady=100)
+
+
+
 
     window.mainloop()
