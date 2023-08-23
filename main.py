@@ -1,9 +1,11 @@
 from tkinter import *
 from tkinter import ttk
 
+
 def change_image(event, new_image):
     current_label.config(image=new_image)
     current_label.image = new_image
+
 
 if __name__ == '__main__':
     window = Tk()
@@ -79,7 +81,75 @@ if __name__ == '__main__':
 
     combo_frame.pack(side=RIGHT, anchor="e", padx=20)
 
-    calculate_button = Button(window, text="Рассчитать стоимость", )
+    # Словари для хранения цен на параметры
+    material_prices = {
+        "Пластик": 1000,
+        "Дерево": 1500,
+        "Алюминий": 2000,
+    }
+
+    color_prices = {
+        "Лимонный Орех": 900,
+        "Черный": 800,
+        "Орех": 850,
+    }
+
+    hardware_prices = {
+        "VORNE(Турция)": 2000,
+        "SIEGENIYA(Германия)": 2200,
+    }
+
+    glazing_prices = {
+        "Двухкамерный": 1500,
+        "Энергосберегающий": 1800,
+    }
+
+    icon_prices = {
+        "icon1": 1000,
+        "icon2": 2000,
+        "icon3": 3000
+    }
+
+    selected_icon = StringVar()
+
+
+    def change_image(event, new_image):
+        current_label.config(image=new_image)
+        current_label.image = new_image
+
+        # Обновляем выбранную иконку
+        selected_icon.set(new_image)
+
+        # Учитываем стоимость иконки
+        selected_icon_value = selected_icon.get()
+        total_price = int(price_label.cget("text").split(":")[1].strip().split(" ")[0])
+        total_price += icon_prices.get(selected_icon_value, 0)
+        price_label.config(text=f"Стоимость окна: {total_price} грн.")
+
+
+    def calculate_price():
+        material = combo1.get()
+        color = combo2.get()
+        hardware = combo3.get()
+        glazing = combo4.get()
+        width = float(width_entry.get())
+        height = float(height_entry.get())
+
+        total_price = (
+                              material_prices.get(material, 0) +
+                              color_prices.get(color, 0) +
+                              hardware_prices.get(hardware, 0) +
+                              glazing_prices.get(glazing, 0)
+                      ) + (width + height)+ (width + height)
+
+        selected_icon_value = selected_icon.get()
+        if selected_icon_value:
+            total_price += icon_prices.get(selected_icon_value, 0)
+
+        price_label.config(text=f"Стоимость окна: {total_price} грн.")
+
+
+    calculate_button = Button(window, text="Рассчитать стоимость", command=calculate_price)
     calculate_button.pack(pady=250)
 
     price_label = Label(window, text="Стоимость окна: ???", font=("Helvetica", 16, "bold"), bg="#c0e0e0")
