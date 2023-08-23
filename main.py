@@ -79,4 +79,10 @@ if __name__ == '__main__':
 
     combo_frame.pack(side=RIGHT, anchor="e", padx=20)
 
+    calculate_button = Button(window, text="Рассчитать стоимость", )
+    calculate_button.pack(pady=250)
+
+    price_label = Label(window, text="Стоимость окна: ???", font=("Helvetica", 16, "bold"), bg="#c0e0e0")
+    price_label.pack(pady=100)
+
     window.mainloop()
